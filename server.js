@@ -34,7 +34,13 @@ app.get('/', (req, res) => {
     } catch (error) {
         res.status(400).json({"error":error.message});
     }
-    
+
+})
+
+app.get('/success', function (req, res) {
+    res.status(200).json({
+        "success": true
+    })
 })
 
 app.post('/createuser', async (req, res) => {
