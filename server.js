@@ -32,48 +32,53 @@ app.get('/', (req, res) => {
     })
 })
 
-app.post('/createuser', async (req, res) => {
-    const {
-        name,
-        dob,
-        address,
-        veg,
-        cuisine,
-        google_pin,
-        allergies,
-        phone_number,
-    } = req.body
-    if (!name || !dob || !address || !veg || !cuisine || !google_pin || !allergies || !phone_number) {
-        res.status(400)
-        throw new Error("Please enter a all Fields")
-    }
+app.get('/createuser', async (req, res) => {
+    // const {
+    //     name,
+    //     dob,
+    //     address,
+    //     veg,
+    //     cuisine,
+    //     google_pin,
+    //     allergies,
+    //     phone_number,
+    // } = req.body
+    // if (!name || !dob || !address || !veg || !cuisine || !google_pin || !allergies || !phone_number) {
+    //     res.status(400)
+    //     throw new Error("Please enter a all Fields")
+    // }
 
-    const userExists = await User.findOne({ phone_number })
+    // const userExists = await User.findOne({ phone_number })
 
-    if (userExists) {
-        res.status(400)
-        throw new Error("User alrady exists")
-    }
+    // if (userExists) {
+    //     res.status(400)
+    //     throw new Error("User alrady exists")
+    // }
 
-    const user = await User.create({
-        name,
-        dob,
-        address,
-        veg,
-        cuisine,
-        google_pin,
-        allergies,
-        phone_number
+    // const user = await User.create({
+    //     name,
+    //     dob,
+    //     address,
+    //     veg,
+    //     cuisine,
+    //     google_pin,
+    //     allergies,
+    //     phone_number
+    // })
+
+    // if (user) {
+    //     res.status(201).json(user)
+    // }
+    // else {
+    //     res.status(404)
+    //     throw new Error('Failed to create user')
+    // }
+    res.status(200).json({
+        status: 'success',
+        data: {
+            msg: 'endpoint called successfully'
+        }
     })
-
-    if (user) {
-        res.status(201).json(user)
-    }
-    else {
-        res.status(404)
-        throw new Error('Failed to create user')
-    }
-
 })
 
 app.listen(PORT, console.log(`listening on port ${PORT}`))
