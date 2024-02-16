@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
     })
 })
 
-app.GET('/createuser', async (req, res) => {
+app.post('/createuser', async (req, res) => {
     const {
         name,
         dob,
