@@ -14,7 +14,8 @@ const app = express()
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.json({
+    try {
+        res.status(200).json({
             "name": "Yogo Doe",
             "dob": "1990-05-15",
             "address": "456 Pine Street, Townsville",
@@ -30,6 +31,10 @@ app.get('/', (req, res) => {
             ],
             "phone_number": "+1234567890"
     })
+    } catch (error) {
+        res.status(400).json({"error":error.message});
+    }
+    
 })
 
 app.post('/createuser', async (req, res) => {
