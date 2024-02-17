@@ -54,7 +54,8 @@ app.post('/createuser', async (req, res) => {
         allergies,
         phone_number,
     } = req.body
-    if (!name || !dob || !address || !veg || !cuisine || !google_pin || !allergies || !phone_number) {
+    console.log(req.body);
+    if (!name || !dob || !address || !cuisine || !google_pin || !allergies || !phone_number) {
         res.status(400)
         throw new Error("Please enter a all Fields")
     }
