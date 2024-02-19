@@ -47,7 +47,7 @@ const registerUser = asyncHandler(async (req,res) => {
 const allUser = asyncHandler(async (req,res) => {
     
 
-    const user = await User.create({})
+    const user = await User.find({})
 
     if (user) {
         res.status(201).json(user)
