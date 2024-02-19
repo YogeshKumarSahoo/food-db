@@ -37,7 +37,7 @@ const createOrder = asyncHandler( async (req,res)=> {
     if (order) {
         res.status(201).json({
             msg:'Order created successfully',
-            order
+            data : order
         })
     }
     else {
