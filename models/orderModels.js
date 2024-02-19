@@ -16,7 +16,7 @@ const orderModel = mongoose.Schema(
                 Qty: {type: Number},
             },
         ],
-        order_date: { type: String, unique: true }
+        order_dateTime: { type: String}
     }
 )
 
