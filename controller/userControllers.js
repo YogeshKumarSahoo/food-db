@@ -68,5 +68,20 @@ const allUser = asyncHandler(async (req,res) => {
     }
 })
 
+const userDetails = asyncHandler(async (req,res) => {
+    
+    const person = req.params.userID
+    const user = await User.find({
+        phone_number:person
+    })
 
-module.exports = { registerUser, allUser }
+    if (user) {
+        res.status(201).json(user)
+    }
+    else {
+        res.status(404)
+        throw new Error('Failed to create user')
+    }
+})
+
+module.exports = { registerUser, allUser, userDetails }
