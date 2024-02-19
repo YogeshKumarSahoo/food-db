@@ -80,7 +80,7 @@ const justinfo = asyncHandler(async (req, res) => {
                         ],
                         "resto_id": "65d24e6983d3d26fcfcacd03",
                         "total_amount": 900,
-                        "order_date": "2024-02-18",
+                        "order_dateTime": "2024-02-20 04:03:04",
                         "delivery_address": "789 Oak Avenue, Cityville",
                         "customer_id": "9876543210"
                     },
