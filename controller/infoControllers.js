@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 
-const justinfo = asyncHandler( async (req, res) => {
+const justinfo = asyncHandler(async (req, res) => {
     res.json({
         NumberOfRoutes: 8,
         User: [
@@ -66,21 +66,27 @@ const justinfo = asyncHandler( async (req, res) => {
                 input: {
                     needed: true,
                     sample: {
-                        "transaction_id": "10011",
-                        "items": [
-                            "Sushi",
-                            "Miso Soup",
-                            "Green Tea"
+                        "transaction_id": "10020",
+                        "items": [{
+                            "name": "Sushi",
+                            "Qyt": 1
+                        }, {
+                            "name": "Miso Soup",
+                            "Qyt": 2
+                        }, {
+                            "name": "Green Tea",
+                            "Qyt": 3
+                        }
                         ],
                         "resto_id": "65d24e6983d3d26fcfcacd03",
-                        "total_amount": 799,
-                        "order_date": "2024-02-16",
+                        "total_amount": 900,
+                        "order_date": "2024-02-18",
                         "delivery_address": "789 Oak Avenue, Cityville",
                         "customer_id": "9876543210"
                     },
                     msg: "input as body and remember tranaction_id as key"
                 },
-                output: "Create a user account"
+                output: "Create an Order"
             },
         ],
         Restro: [
@@ -144,7 +150,7 @@ const justinfo = asyncHandler( async (req, res) => {
         ],
     })
 })
-const initial = asyncHandler( async (req,res)=> {
+const initial = asyncHandler(async (req, res) => {
     res.send("I'm Running...")
 })
 

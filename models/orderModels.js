@@ -11,7 +11,10 @@ const orderModel = mongoose.Schema(
         delivery_address: { type: String, },
         total_amount: { type: Number, },
         items: [
-            { type: String, },
+            { 
+                name: {type: String},
+                Qty: {type: Number},
+            },
         ],
         order_date: { type: String, unique: true }
     }
