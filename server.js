@@ -1,6 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv')
-const User = require('./models/userModels')
+const infoRoutes = require('./routes/infoRouters')
 const userRoutes = require('./routes/userRoutes')
 const orderRoutes = require('./routes/orderRoutes')
 const restoRoutes = require('./routes/restoRoutes')
@@ -16,10 +16,7 @@ const app = express()
 
 app.use(express.json())
 
-app.get('/', (req, res) => {
-    res.send("I'm Running...")
-})
-
+app.use('/', infoRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/order', orderRoutes)
 app.use('/api/resto', restoRoutes)
