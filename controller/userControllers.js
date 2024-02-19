@@ -44,6 +44,19 @@ const registerUser = asyncHandler(async (req,res) => {
         throw new Error('Failed to create user')
     }
 })
+const allUser = asyncHandler(async (req,res) => {
+    
+
+    const user = await User.create({})
+
+    if (user) {
+        res.status(201).json(user)
+    }
+    else {
+        res.status(404)
+        throw new Error('Failed to create user')
+    }
+})
 
 
-module.exports = { registerUser }
+module.exports = { registerUser, allUser }
