@@ -52,6 +52,17 @@ const allOrder = asyncHandler( async (req,res)=> {
         res.status(404).send('Failed to fetch orders')
     }
 })
+const userHistory = asyncHandler( async (req,res)=> {
+    
+    const order = await Order.find({})
+
+    if (order) {
+        res.status(201).json(order)
+    }
+    else {
+        res.status(404).send('Failed to fetch orders')
+    }
+})
 
 
-module.exports = { createOrder, allOrder }
+module.exports = { createOrder, allOrder, userHistory }
