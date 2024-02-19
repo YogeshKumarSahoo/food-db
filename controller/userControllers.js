@@ -25,16 +25,26 @@ const registerUser = asyncHandler(async (req,res) => {
         throw new Error("User alrady exists")
     }
 
-    const user = await User.create({
-        name,
-        dob,
-        address,
-        veg,
-        cuisine,
-        google_pin,
-        allergies,
-        phone_number
-    })
+    let user
+
+    try {
+        user = await User.create({
+            name,
+            dob,
+            address,
+            veg,
+            cuisine,
+            google_pin,
+            allergies,
+            phone_number
+        })
+    }
+    catch (err) {
+        res.status(500).json({
+            msg: 'Failed to create user',
+            error: err
+        })
+    }
 
     if (user) {
         res.status(201).json(user)

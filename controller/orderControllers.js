@@ -16,16 +16,24 @@ const createOrder = asyncHandler( async (req,res)=> {
         res.status(400).send("Please enter a all Fields")
     }
 
-    const order = await Order.create({
-        transaction_id,
-        items,
-        resto_id,
-        total_amount,
-        order_date,
-        delivery_address,
-        customer_id,
-    })
-
+    let order
+    try{
+            order = await Order.create({
+                transaction_id,
+                items,
+                resto_id,
+                total_amount,
+                order_date,
+                delivery_address,
+                customer_id,
+        })
+    }
+    catch(err) {
+        res.status(500).json({
+            msg:'Failed to create order',
+            error: err
+        })
+    }
     if (order) {
         res.status(201).json(order)
     }
