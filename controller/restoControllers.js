@@ -55,16 +55,18 @@ const allResto = asyncHandler(async (req, res) => {
 
 
 const allRestoFood = asyncHandler(async (req, res) => {
-    const foods = req.params.food
+    const food = req.params.food;
 
-    const resto = await Resto.find({ 'resto_menu.dish': foods })
+    const foodRegex = new RegExp(food, 'i');
+
+    const resto = await Resto.find({ 'resto_menu.dish': { $regex: foodRegex } });
 
     if (resto) {
-        res.status(201).json(resto)
+        res.status(200).json(resto);
+    } else {
+        res.status(404).send('Failed to fetch restos');
     }
-    else {
-        res.status(404).send('Failed to fetch restos')
-    }
-})
+});
+
 
 module.exports = { createResto, allResto, allRestoFood }
