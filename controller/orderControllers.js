@@ -35,7 +35,10 @@ const createOrder = asyncHandler( async (req,res)=> {
         })
     }
     if (order) {
-        res.status(201).json(order)
+        res.status(201).json({
+            msg:'Order created successfully',
+            order
+        })
     }
     else {
         res.status(404).send('Failed to create order')
