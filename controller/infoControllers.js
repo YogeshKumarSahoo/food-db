@@ -61,6 +61,26 @@ const justinfo = asyncHandler(async (req, res) => {
                 output: "will give you all orders"
             },
             {
+                route: "/api/order?userId=",
+                type: "GET",
+                input: {
+                    needed: true,
+                    sample: {},
+                    msg: "just give user ph no."
+                },
+                output: "will give you all orders"
+            },
+            {
+                route: "/api/order?restoId=",
+                type: "GET",
+                input: {
+                    needed: true,
+                    sample: {},
+                    msg: "just give resto object ID"
+                },
+                output: "will give you all orders"
+            },
+            {
                 route: "/api/order/create",
                 type: "POST",
                 input: {
