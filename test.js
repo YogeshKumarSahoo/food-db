@@ -1,24 +1,29 @@
-function getCurrentDateTime() {
-    const currentDateTime = new Date();
+const axios = require('axios')
 
-    const year = currentDateTime.getFullYear();
-    const month = currentDateTime.getMonth() + 1; // Months are zero-indexed
-    const day = currentDateTime.getDate();
-    const hours = currentDateTime.getHours();
-    const minutes = currentDateTime.getMinutes();
-    const seconds = currentDateTime.getSeconds();
+// Replace YOUR_API_KEY with your actual API key
+const apiKey = process.env.DISTANCE_API_KEY;
+console.log();
+// Define origin and destination coordinates
+const origin = '28.6139,77.2090'; // Bhubaneswar, India
+const destination = '26.2389,73.0243'; // Rajkot, India
 
-    // Add leading zeros manually
-    const formattedMonth = month < 10 ? '0' + month : month;
-    const formattedDay = day < 10 ? '0' + day : day;
-    const formattedHours = hours < 10 ? '0' + hours : hours;
-    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-    const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+const getDistance = async () => {
+    try {
+        const response = await axios.get(
+            `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destination}&travelMode=driving&key=${apiKey}`
+        );
 
-    const formattedDateTime = `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-    return formattedDateTime;
-}
+        if (response.data.status === 'OK') {
+            const distance = response.data.rows[0].elements[0].distance.text;
+            const duration = response.data.rows[0].elements[0].duration.text;
+            console.log(`Distance: ${distance}`);
+            console.log(`Duration: ${duration}`);
+        } else {
+            console.error(`Error: ${response.data.status}`);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-// Example usage
-const currentDateTime = getCurrentDateTime();
-console.log('Current Date and Time:', currentDateTime);
+getDistance();

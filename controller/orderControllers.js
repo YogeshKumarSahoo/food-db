@@ -7,12 +7,13 @@ const createOrder = asyncHandler( async (req,res)=> {
         items,
         resto_id,
         total_amount,
-        order_date,
+        order_dateTime,
         delivery_address,
         customer_id,
     } = req.body
     console.log(req.body);
-    if (!transaction_id || !items || !resto_id || !total_amount || !order_date || !delivery_address || !customer_id) {
+
+    if (!transaction_id || !items || !resto_id || !total_amount || !order_dateTime || !delivery_address || !customer_id) {
         res.status(400).send("Please enter a all Fields")
     }
 
@@ -23,7 +24,7 @@ const createOrder = asyncHandler( async (req,res)=> {
                 items,
                 resto_id,
                 total_amount,
-                order_date,
+                order_dateTime,
                 delivery_address,
                 customer_id,
         })
