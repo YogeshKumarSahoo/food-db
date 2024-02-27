@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 
 const justinfo = asyncHandler(async (req, res) => {
     res.json({
-        NumberOfRoutes: 8,
+        NumberOfRoutes: 11,
         User: [
             {
                 route: "/api/users",
@@ -23,6 +23,16 @@ const justinfo = asyncHandler(async (req, res) => {
                     msg: "as params '/<userID>' where userID is phoneNumber"
                 },
                 output: "will give you a user"
+            },
+            {
+                route: "/api/users/recommendation/:userID",
+                type: "GET",
+                input: {
+                    needed: true,
+                    sample: { url: "/api/recommendation/7845123265" },
+                    msg: "as params '/<userID>' where userID is phoneNumber"
+                },
+                output: "will give you a 4 resto"
             },
             {
                 route: "/api/users/create",
