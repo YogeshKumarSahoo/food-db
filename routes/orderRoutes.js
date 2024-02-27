@@ -4,6 +4,6 @@ const { createOrder, allOrder, createInvoice } = require('../controller/orderCon
 
 router.route('/').get(allOrder)
 router.route('/create').post(createOrder)
-router.route('/generate-invoice').post(createInvoice)
+router.route('/generate-invoice').get(createInvoice)
 
 module.exports = router

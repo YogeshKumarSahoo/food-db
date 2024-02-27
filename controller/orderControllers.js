@@ -1,7 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const Order = require('../models/orderModels')
+const PDFDocument = require('pdfkit');
 
-const createOrder = asyncHandler( async (req,res)=> {
+const createOrder = asyncHandler(async (req, res) => {
     const {
         transaction_id,
         items,
@@ -18,59 +19,59 @@ const createOrder = asyncHandler( async (req,res)=> {
     }
 
     let order
-    try{
-            order = await Order.create({
-                transaction_id,
-                items,
-                resto_id,
-                total_amount,
-                order_dateTime,
-                delivery_address,
-                customer_id,
+    try {
+        order = await Order.create({
+            transaction_id,
+            items,
+            resto_id,
+            total_amount,
+            order_dateTime,
+            delivery_address,
+            customer_id,
         })
     }
-    catch(err) {
+    catch (err) {
         res.status(500).json({
-            msg:'Failed to create order',
+            msg: 'Failed to create order',
             error: err
         })
     }
     if (order) {
         res.status(201).json({
-            msg:'Order created successfully',
-            data : order
+            msg: 'Order created successfully',
+            data: order
         })
     }
     else {
         res.status(404).send('Failed to create order')
     }
 })
-const allOrder = asyncHandler( async (req,res)=> {
-    
+const allOrder = asyncHandler(async (req, res) => {
+
     const userId = req.query.userId
     const restoId = req.query.restoId
-    
+
     let order
-    if(userId){
-        try{
-            order = await Order.find({'customer_id': userId})
+    if (userId) {
+        try {
+            order = await Order.find({ 'customer_id': userId })
         }
-        catch(err){
+        catch (err) {
             res.status(404).send('invelid user')
         }
     }
-    else if(restoId){
-        try{
-            order = await Order.find({'resto_id': restoId})
+    else if (restoId) {
+        try {
+            order = await Order.find({ 'resto_id': restoId })
         }
-        catch(err){
+        catch (err) {
             res.status(404).send('invelid resto')
         }
     }
-    else{
+    else {
         order = await Order.find({})
     }
-    
+
     if (order) {
         res.status(201).json(order)
     }
@@ -79,25 +80,57 @@ const allOrder = asyncHandler( async (req,res)=> {
     }
 })
 
-const createInvoice = asyncHandler( async (req,res)=> {
-    // Create a new PDF document
-    const pdfDoc = new PDFDocument();
+const createInvoice = asyncHandler(async (req, res) => {
+    const id = req.query.oid;
 
-    // Add content to the PDF
-    pdfDoc.text('Invoice', 80, 10);
-    pdfDoc.text('Date: ' + new Date().toLocaleDateString(), 10, 20);
-    pdfDoc.text('Invoice #: 12345', 10, 30);
-    pdfDoc.text('Amount: $100.00', 10, 40);
+    if (!id) {
+        res.status(400).send('oid not found');
+        return;
+    }
 
-    // Set response headers for PDF
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'inline; filename=invoice.pdf');
+    let respo;
 
-    // Pipe the PDF to the response stream
-    pdfDoc.pipe(res);
+    try {
+        // Execute the query to get the result
+        respo = await Order.findById(id).exec();
 
-    // End the PDF stream
-    pdfDoc.end();
-})
+        if (!respo) {
+            res.status(404).send('Order not found');
+            return;
+        }
+
+        // Create a new PDF document
+        const pdfDoc = new PDFDocument();
+
+        // Set response headers for PDF
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'inline; filename=invoice.pdf');
+
+        // Pipe the PDF to the response stream
+        pdfDoc.pipe(res);
+
+        // Add content to the PDF based on the retrieved data
+        pdfDoc.text('Invoice', 80, 10);
+        pdfDoc.text(`Transaction ID: ${respo.transaction_id}`, 10, 20);
+        pdfDoc.text(`Customer ID: ${respo.customer_id}`, 10, 30);
+        pdfDoc.text(`Delivery Address: ${respo.delivery_address}`, 10, 40);
+
+        // Add item details
+        let startY = 60;
+        respo.items.forEach((item, index) => {
+            pdfDoc.text(`Item ${index + 1}: ${item.name}, Qty: ${item.Qty}`, 10, startY);
+            startY += 10;
+        });
+
+        pdfDoc.text(`Total Amount: Rs.${respo.total_amount.toFixed(2)}`, 10, startY + 10);
+
+        // End the PDF stream
+        pdfDoc.end();
+    } catch (err) {
+        console.log('Error:', err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 module.exports = { createOrder, allOrder, createInvoice }
