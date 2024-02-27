@@ -91,12 +91,12 @@ const justinfo = asyncHandler(async (req, res) => {
                 output: "will give you all orders"
             },
             {
-                route: "/api/order/generate-invoice?restoId=",
+                route: "/api/order/generate-invoice?oid=",
                 type: "GET",
                 input: {
                     needed: true,
                     sample: {},
-                    msg: "just give resto object ID"
+                    msg: "just give order object ID"
                 },
                 output: "will give you a pdf invoice"
             },
