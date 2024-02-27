@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 
 const justinfo = asyncHandler(async (req, res) => {
     res.json({
-        NumberOfRoutes: 11,
+        NumberOfRoutes: 12,
         User: [
             {
                 route: "/api/users",
@@ -89,6 +89,16 @@ const justinfo = asyncHandler(async (req, res) => {
                     msg: "just give resto object ID"
                 },
                 output: "will give you all orders"
+            },
+            {
+                route: "/api/order/generate-invoice?restoId=",
+                type: "GET",
+                input: {
+                    needed: true,
+                    sample: {},
+                    msg: "just give resto object ID"
+                },
+                output: "will give you a pdf invoice"
             },
             {
                 route: "/api/order/create",
