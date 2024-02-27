@@ -7,7 +7,9 @@ const userModel = mongoose.Schema(
         dob: { type: String, },
         address: { type: String, },
         veg: { type: Boolean, },
-        cuisine: { type: String, },
+        cuisine: [
+            { type: String, },
+        ],
         google_pin:{
             lat: { type: String, },
             long: { type: String,},
