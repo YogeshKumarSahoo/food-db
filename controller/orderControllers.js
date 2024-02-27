@@ -46,10 +46,10 @@ const createOrder = asyncHandler( async (req,res)=> {
     }
 })
 const allOrder = asyncHandler( async (req,res)=> {
-
+    
     const userId = req.query.userId
     const restoId = req.query.restoId
-
+    
     let order
     if(userId){
         try{
@@ -70,7 +70,7 @@ const allOrder = asyncHandler( async (req,res)=> {
     else{
         order = await Order.find({})
     }
-
+    
     if (order) {
         res.status(201).json(order)
     }
@@ -79,4 +79,25 @@ const allOrder = asyncHandler( async (req,res)=> {
     }
 })
 
-module.exports = { createOrder, allOrder }
+const createInvoice = asyncHandler( async (req,res)=> {
+    // Create a new PDF document
+    const pdfDoc = new PDFDocument();
+
+    // Add content to the PDF
+    pdfDoc.text('Invoice', 80, 10);
+    pdfDoc.text('Date: ' + new Date().toLocaleDateString(), 10, 20);
+    pdfDoc.text('Invoice #: 12345', 10, 30);
+    pdfDoc.text('Amount: $100.00', 10, 40);
+
+    // Set response headers for PDF
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename=invoice.pdf');
+
+    // Pipe the PDF to the response stream
+    pdfDoc.pipe(res);
+
+    // End the PDF stream
+    pdfDoc.end();
+})
+
+module.exports = { createOrder, allOrder, createInvoice }

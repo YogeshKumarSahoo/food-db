@@ -152,7 +152,7 @@ const recommendations = asyncHandler(async (req, res) => {
     // res.status(200).json(restoWithDistances); // Send the sorted restaurants with distances
 
 
-    function getRandomElements(list, numElements) {
+    function getRandomElements(list) {
         // Shuffle the list using the Fisher-Yates shuffle algorithm
         for (let i = list.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -160,10 +160,10 @@ const recommendations = asyncHandler(async (req, res) => {
         }
 
         // Slice the shuffled list to get the desired number of elements
-        return list.slice(0, numElements);
+        return list;
     }
 
-    final = getRandomElements(resto, 4)
+    final = getRandomElements(resto)
     res.status(200).json(final)
 });
 

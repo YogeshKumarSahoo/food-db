@@ -32,7 +32,7 @@ const justinfo = asyncHandler(async (req, res) => {
                     sample: { url: "/api/recommendation/7845123265" },
                     msg: "as params '/<userID>' where userID is phoneNumber"
                 },
-                output: "will give you a 4 resto"
+                output: "will give you all restos recommendations in a order"
             },
             {
                 route: "/api/users/create",

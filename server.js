@@ -1,5 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv')
+const PDFDocument = require('pdfkit')
 const infoRoutes = require('./routes/infoRouters')
 const userRoutes = require('./routes/userRoutes')
 const orderRoutes = require('./routes/orderRoutes')
@@ -17,7 +18,7 @@ const app = express()
 app.use(express.json())
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*'); 
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
