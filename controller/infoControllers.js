@@ -44,7 +44,7 @@ const justinfo = asyncHandler(async (req, res) => {
                         "dob": "1990-05-15",
                         "address": "456 Pine Street, Townsville",
                         "veg": true,
-                        "cuisine": "Italian",
+                        "cuisine": ["Italian", "Japanese"],
                         "google_pin": {
                             "lat": "78.123456",
                             "long": "-23.456789"
